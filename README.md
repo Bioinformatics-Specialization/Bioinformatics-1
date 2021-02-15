@@ -3,7 +3,7 @@
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Bioinformatics-Specialization/Bioinformatics-1)
 
 
-This course begins a series of classes illustrating the power of computing in modern biology. Please join us on the frontier of bioinformatics to look for hidden messages in DNA without ever needing to put on a lab coat.
+This [course](https://www.coursera.org/learn/dna-analysis?specialization=bioinformatics#about) begins a series of classes illustrating the power of computing in modern biology. Please join us on the frontier of bioinformatics to look for hidden messages in DNA without ever needing to put on a lab coat.
 <br><br>
 
 <h2>🧬 DNA Replication</h2>
