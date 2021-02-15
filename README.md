@@ -10,4 +10,4 @@ Finally, you will get your hands dirty and apply existing software tools to find
 
 Offered By
 <br><br>
-<img src="./ucsd-logo.png" width="250" title="UCSD">
+<img src="./assets/ucsd-logo.png" width="250" title="UCSD">
