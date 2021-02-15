@@ -39,7 +39,6 @@ def main() :
     args = parseArgs()
     text = ""
     pattern = ""
-
     dataset_path = "{}/{}_dataset.txt".format(DATASET_DIR, os.path.splitext(sys.argv[0])[0])
     
     # Default to the dataset folder, if not provided
