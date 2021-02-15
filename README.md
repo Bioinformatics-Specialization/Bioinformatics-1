@@ -1,4 +1,6 @@
 # Finding Hidden Messages in DNA (Bioinformatics I)
+![GitHub last commit](https://img.shields.io/github/last-commit/Bioinformatics-Specialization/Bioinformatics-1?style=flat-square)
+
 
 This course begins a series of classes illustrating the power of computing in modern biology. Please join us on the frontier of bioinformatics to look for hidden messages in DNA without ever needing to put on a lab coat.
 
