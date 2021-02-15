@@ -1,4 +1,8 @@
 import argparse
+import os
+import sys
+DATASET_DIR = os.path.join(os.getcwd(), 'datasets')
+
 
 def patternCount(text, pattern):
     count = 0
@@ -27,7 +31,7 @@ def parseArgs() :
                 '''
             )
     
-    parser.add_argument('file', help="Input file path.")
+    parser.add_argument('-f', '--file', required=False, help="Input file path.")
 
     return parser.parse_args()
 
@@ -36,6 +40,12 @@ def main() :
     text = ""
     pattern = ""
 
+    dataset_path = "{}/{}_dataset.txt".format(DATASET_DIR, os.path.splitext(sys.argv[0])[0])
+    
+    # Default to the dataset folder, if not provided
+    if not args.file :
+        args.file = dataset_path
+    
     with open(args.file, 'r') as f :
         text = f.readline().strip()
         pattern = f.readline().strip()
