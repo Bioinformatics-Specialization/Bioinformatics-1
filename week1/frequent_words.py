@@ -23,7 +23,7 @@ def frequentWords(text, k) :
 
 def parseArgs() :
     parser = argparse.ArgumentParser(
-                prog="pattern_count.py",
+                prog="frequent_words.py",
                 formatter_class=argparse.RawDescriptionHelpFormatter,
                 description='''\
                     This file return the most frequently count k-mer from a DNA string.
