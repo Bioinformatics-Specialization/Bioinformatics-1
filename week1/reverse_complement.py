@@ -21,19 +21,18 @@ def reverseComplement(text):
 
 def parseArgs() :
     parser = argparse.ArgumentParser(
-                prog="pattern_count.py",
+                prog="reverse_complement.py",
                 formatter_class=argparse.RawDescriptionHelpFormatter,
                 description='''\
-                    This file return the most frequently count k-mer from a DNA string.
+                    This file return the reverse complement of a DNA string.
 
                     Input File format :
                     ---------------------------------------
-                    ACGTTGCATGTCGCATGATGCATGAGAGCT
-                    4
-
+                    AAAACCCGGT
+                    
                     Expected output :
                     ---------------------------------------
-                    CATG GCAT
+                    ACCGGGTTTT
                 '''
             )
     
