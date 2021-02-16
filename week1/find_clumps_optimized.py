@@ -6,7 +6,7 @@ import time
 
 
 
-def findClumps(genome, k, L, t) :
+def findClumpsOptimized(genome, k, L, t) :
     clumped_kmers = []
     kmers_occurence_dict = {}
     
@@ -77,7 +77,7 @@ def main() :
         k, L, t = f.readline().split(" ")
 
     start = time.time()
-    clumps = findClumps(genome, int(k), int(L), int(t))
+    clumps = findClumpsOptimized(genome, int(k), int(L), int(t))
     end = time.time()
 
     print("Time taken...{}s".format(end-start))
