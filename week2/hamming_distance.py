@@ -15,7 +15,7 @@ def hammingDistance(text_a, text_b) :
 
 def parseArgs() :
     parser = argparse.ArgumentParser(
-                prog="hamming_distance.py",
+                prog="{}".format(__file__),
                 formatter_class=argparse.RawDescriptionHelpFormatter,
                 description='''\
                     This file return number of mismatches between two given strings.

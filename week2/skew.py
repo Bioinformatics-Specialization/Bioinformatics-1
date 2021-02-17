@@ -24,7 +24,7 @@ def skew(genome):
 
 def parseArgs() :
     parser = argparse.ArgumentParser(
-                prog="find_clumps_optimized.py",
+                prog="{}".format(__file__),
                 formatter_class=argparse.RawDescriptionHelpFormatter,
                 description='''\
                     This file return GC skew (#G - #C) of the genome.
