@@ -6,9 +6,7 @@ DATASET_DIR = os.path.join(os.getcwd(), 'datasets')
 WEEK2_DIR = str(Path(__file__).resolve().parents[1]) + "/week2"
 sys.path.insert(1, WEEK2_DIR)
 
-from hamming_distance import hammingDistance
 from find_neighbors import neighbors
-from itertools import chain
 
 
 def motifEnumeration(dna, k, d) :
