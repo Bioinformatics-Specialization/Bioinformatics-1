@@ -6,14 +6,27 @@ DATASET_DIR = os.path.join(os.getcwd(), 'datasets')
 WEEK2_DIR = str(Path(__file__).resolve().parents[1]) + "/week2"
 sys.path.insert(1, WEEK2_DIR)
 
+from hamming_distance import hammingDistance
 from find_neighbors import neighbors
 
 
-def medianString(dna, k) :
+def distanceBetweenPatternAndStrings(pattern, dna) :
+    k = len(pattern)
+    distance = 0
 
     for each_dna in dna :
-        
-    return ""
+        hamming_distance = float('inf')
+
+        for i in range(len(each_dna)-k+1):
+            kmer = each_dna[i:i+k]
+            h_dist = hammingDistance(pattern, kmer)
+
+            if  h_dist < hamming_distance :
+                hamming_distance = h_dist
+
+        distance = distance + hamming_distance
+    
+    return distance
 
 
 def parseArgs() :
@@ -21,20 +34,16 @@ def parseArgs() :
                 prog="{}".format(__file__),
                 formatter_class=argparse.RawDescriptionHelpFormatter,
                 description='''\
-                    This file will return the median string of the collection of DNAs.
+                    This file will return the Score(Motifs) or sum of distances between Pattern and all strings in Dna.
 
                     Input File format :
                     ---------------------------------------
-                    3
-                    AAATTGACGCAT
-                    GACGACCACGTT
-                    CGTCAGCGCCTG
-                    GCTGAGCACCGG
-                    AGTTCGGGACAG
+                    AAA
+                    TTACCTTAAC GATATCTGTC ACGGCGTTCG CCCTAAAGAG CGTCAGAGGT
                     
                     Expected output :
                     ---------------------------------------
-                    GAC
+                    5
                 '''
             )
     
@@ -51,12 +60,12 @@ def main() :
         args.file = dataset_path
     
     with open(args.file, 'r') as f :
-        k = f.readline().split()
-        dna = [_.replace("\n", "") for _ in f.readlines()]
+        pattern = f.readline().strip()
+        dna = f.readline().split()
 
-    medianString(dna, k)
+    distance = distanceBetweenPatternAndStrings(pattern, dna)
 
-    print(dna)
+    print(distance)
 
 if __name__ == "__main__":
     main()
