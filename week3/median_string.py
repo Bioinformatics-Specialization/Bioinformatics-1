@@ -7,13 +7,24 @@ WEEK2_DIR = str(Path(__file__).resolve().parents[1]) + "/week2"
 sys.path.insert(1, WEEK2_DIR)
 
 from find_neighbors import neighbors
+from distanceBetweenPatternAndStrings import distanceBetweenPatternAndStrings
 
 
 def medianString(dna, k) :
+    medianStr = ("", float("inf"))
+    curr_kmer = "".join(["A"] * k)
 
-    for each_dna in dna :
+    # Get all neighbors of 'curr_kmer' into a dictionary
+    curr_kmer_neighbors = neighbors(curr_kmer, k)
+    
+    # Find distance between each neighbor against the DNA set, and get the minimum
+    for kmer_neighbor in curr_kmer_neighbors :
+        dist = distanceBetweenPatternAndStrings(kmer_neighbor, dna)
+
+        if dist < medianStr[1] :
+            medianStr = (kmer_neighbor, dist)
         
-    return ""
+    return medianStr[0]
 
 
 def parseArgs() :
@@ -51,12 +62,12 @@ def main() :
         args.file = dataset_path
     
     with open(args.file, 'r') as f :
-        k = f.readline().split()
+        k = f.readline().split()[0]
         dna = [_.replace("\n", "") for _ in f.readlines()]
 
-    medianString(dna, k)
+    answer = medianString(dna, int(k))
 
-    print(dna)
+    print(answer)
 
 if __name__ == "__main__":
     main()
