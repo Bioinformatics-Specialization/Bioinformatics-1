@@ -43,12 +43,21 @@ def main() :
         args.file = dataset_path
     
     with open(args.file, 'r') as f :
-        k = f.readline().split()[0]
-        dna = [_.replace("\n", "") for _ in f.readlines()]
+        text = f.readline().strip()
+        k = f.readline().strip()
+        
+        profile_matrix = {}
+        for i, row in enumerate(f.readlines()) : 
+            if i == 0 :
+                profile_matrix["A"] = row.strip()
+            elif i == 1 :
+                profile_matrix["C"] = row.strip()
+            elif i == 2 :
+                profile_matrix["G"] = row.strip()
+            else :
+                profile_matrix["T"] = row.strip()
 
-    answer = medianString(dna, int(k))
-
-    print(answer)
+    print(profile_matrix)
 
 if __name__ == "__main__":
     main()
