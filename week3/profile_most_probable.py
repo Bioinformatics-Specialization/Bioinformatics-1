@@ -7,6 +7,23 @@ WEEK2_DIR = str(Path(__file__).resolve().parents[1]) + "/week2"
 sys.path.insert(1, WEEK2_DIR)
 
 
+def profileMostProbableKmer(dna, k, profile) :
+    # Get all the kmers inside the dna
+    kmer_scores = {}
+    for i in range(len(dna)-k+1) :
+        curr_kmer = dna[i:i+k]
+        if curr_kmer not in kmer_scores :
+            kmer_scores[curr_kmer] = 1
+
+    for kmer, score in kmer_scores.items() :
+        for i in range(len(kmer)) :
+            prob = profile[kmer[i]][i]
+            kmer_scores[kmer] = kmer_scores[kmer] * prob
+    
+    probable_kmer = max(kmer_scores, key=kmer_scores.get)
+
+    return probable_kmer
+
 def parseArgs() :
     parser = argparse.ArgumentParser(
                 prog="{}".format(__file__),
@@ -51,7 +68,9 @@ def main() :
         for i, row in enumerate(f.readlines()) : 
             profile_matrix[nucleotides[i]] = [float(_) for _ in row.strip().split(" ")]
 
-    print(profile_matrix)
+    kmer = profileMostProbableKmer(text, int(k), profile_matrix)
+
+    print(kmer)
 
 if __name__ == "__main__":
     main()
