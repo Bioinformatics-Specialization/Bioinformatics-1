@@ -24,22 +24,25 @@ def find_consensus_string(kmers):
 
     return "".join(consensus)
 
-def update_profile_matrix(kmer, profile):
+def build_profile_matrix(kmers):
+    k = len(kmers[0])
+    # Initialize profile matrix
+    profileMatrix = { "A": [0] * k, "C": [0] * k, "G": [0] * k, "T": [0] * k }    
     
-    for i in range(len(kmer)) :
-        profile[kmer[i]][i] = profile[kmer[i]][i] + 1
+    for kmer in kmers :
+        for i in range(len(kmer)) :
+            profileMatrix[kmer[i]][i] = profileMatrix[kmer[i]][i] + 1
 
-    return profile
+    for key, val in profileMatrix.items() :
+        profileMatrix[key] = [_/len(kmers) for _ in val]
+
+    return profileMatrix
 
 def greedyMotifSearch(dnas, k, t) :
-
     # Set best motif as the first kmers for each dna strings
     best_motifs = []
     [best_motifs.append(dna[:k]) for dna in dnas]
     best_motif_score = float('inf')
-
-    # Initialize profile matrix
-    profileMatrix = { "A": [0] * k, "C": [0] * k, "G": [0] * k, "T": [0] * k }
 
     count = 0
     for i in range(len(dnas[0])-k+1):
@@ -48,21 +51,16 @@ def greedyMotifSearch(dnas, k, t) :
         curr_kmer = dnas[0][i:i+k]
         motifs.append(curr_kmer)
         
-        profile = update_profile_matrix(curr_kmer, profileMatrix)
-        for key, val in profile.items() :
-            profile[key] = [_/(i+1) for _ in val]
-        
         for j in range(1, t) :
+            # Get profile matrix
+            profile = build_profile_matrix(motifs)
+
             # Find most probable kmer given the current profile
             motif = profileMostProbableKmer(dnas[j], k, profile)
             motifs.append(motif)
             
-            # Have to update profile again
-            profile = update_profile_matrix(motif, profileMatrix)
-            for key, val in profile.items() :
-                profile[key] = [_/(i+1+j) for _ in val]
-
         consensus_motif = find_consensus_string(motifs)
+
         motif_score = 0
         for motif in motifs : 
             motif_score = motif_score + hammingDistance(consensus_motif, motif)
@@ -70,15 +68,6 @@ def greedyMotifSearch(dnas, k, t) :
         if motif_score <= best_motif_score :
             best_motif_score = motif_score
             best_motifs = motifs
-
-        # break
-        # for j in range(2, t):
-        # count = count + 1
-        
-        # if count == 2 :
-        #     break
-    
-
 
     return "\n".join(best_motifs)
 
