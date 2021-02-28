@@ -24,10 +24,11 @@ def find_consensus_string(kmers):
 
     return "".join(consensus)
 
-def build_profile_matrix(kmers):
+def build_profile_matrix(kmers, pseudocounts=False):
     k = len(kmers[0])
     # Initialize profile matrix
-    profileMatrix = { "A": [0] * k, "C": [0] * k, "G": [0] * k, "T": [0] * k }    
+    if pseudocounts : profileMatrix = { "A": [1] * k, "C": [1] * k, "G": [1] * k, "T": [1] * k }    
+    else : profileMatrix = { "A": [0] * k, "C": [0] * k, "G": [0] * k, "T": [0] * k }    
     
     for kmer in kmers :
         for i in range(len(kmer)) :
@@ -38,7 +39,7 @@ def build_profile_matrix(kmers):
 
     return profileMatrix
 
-def greedyMotifSearch(dnas, k, t) :
+def greedyMotifSearch(dnas, k, t, pseudocounts=False) :
     # Set best motif as the first kmers for each dna strings
     best_motifs = []
     [best_motifs.append(dna[:k]) for dna in dnas]
@@ -53,8 +54,8 @@ def greedyMotifSearch(dnas, k, t) :
         
         for j in range(1, t) :
             # Get profile matrix
-            profile = build_profile_matrix(motifs)
-
+            profile = build_profile_matrix(motifs, pseudocounts)
+            
             # Find most probable kmer given the current profile
             motif = profileMostProbableKmer(dnas[j], k, profile)
             motifs.append(motif)
@@ -65,7 +66,7 @@ def greedyMotifSearch(dnas, k, t) :
         for motif in motifs : 
             motif_score = motif_score + hammingDistance(consensus_motif, motif)
         
-        if motif_score <= best_motif_score :
+        if motif_score < best_motif_score :
             best_motif_score = motif_score
             best_motifs = motifs
 
@@ -99,6 +100,7 @@ def parseArgs() :
             )
     
     parser.add_argument('-f', '--file', required=False, help="Input file path.")
+    parser.add_argument('-p', '--pseudocount', required=False, help="This will turn on the pseudocount mode of greedyMotifSearch().")
 
     return parser.parse_args()
 
@@ -106,10 +108,14 @@ def main() :
     args = parseArgs()
     dataset_path = "{}/{}_dataset.txt".format(DATASET_DIR, os.path.splitext(sys.argv[0])[0])
     nucleotides = ["A", "C", "G", "T"]
+    pseudo_counts = False
 
     # Default to the dataset folder, if not provided
     if not args.file :
         args.file = dataset_path
+
+    if args.pseudocount :
+        pseudo_counts = True
     
     with open(args.file, 'r') as f :
         k, t = f.readline().split(" ")
@@ -117,7 +123,7 @@ def main() :
         dna_strings = []
         [dna_strings.append(row.strip()) for i, row in enumerate(f.readlines())]
             
-    motif = greedyMotifSearch(dna_strings, int(k), int(t))
+    motif = greedyMotifSearch(dna_strings, int(k), int(t), pseudo_counts)
 
     print(motif)
 
