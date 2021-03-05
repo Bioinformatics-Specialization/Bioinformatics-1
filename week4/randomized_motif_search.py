@@ -176,11 +176,6 @@ def randomizedMotifSearch(dnas, k, t) :
         if motifs_score < best_motifs_score :
             best_motifs = motifs[:]
             best_motifs_score = motifs_score
-
-            # print("*********************")
-            # print("New Best Motifs : {}".format(motifs))
-            # print("*********************")
-
         else :
             return best_motifs, best_motifs_score
 
@@ -236,14 +231,13 @@ def main() :
     best_motifs = None
     for i in range(1000) :
         motifs, sc = randomizedMotifSearch(dna_strings, int(k), int(t))
-        print(motifs, sc)
 
         if sc < motifs_score :
             motifs_score = sc
             best_motifs = motifs
     
-    print("----")
-    print(best_motifs, motifs_score)
+    for best_motif in best_motifs :
+        print(best_motif)
     
 
 if __name__ == "__main__":
