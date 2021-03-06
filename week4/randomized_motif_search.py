@@ -15,17 +15,12 @@ from greedy_motif_search import build_profile_matrix
 
 
 def find_motifs_from_profile(profile, dnas) :
-    motifs = []
     k = len(profile["A"])
-
-    for dna in dnas :        
-        probable_kmer = profileMostProbableKmer(dna, k, profile)
-        motifs.append(probable_kmer)
+    motifs = [profileMostProbableKmer(dna, k, profile) for dna in dnas]
     
     return motifs
 
 def find_consensus_string(kmers):
-
     consensus = []
 
     for i in range(len(kmers[0])):
@@ -138,11 +133,10 @@ def main() :
     if not args.file :
         args.file = dataset_path
     
+    # Read from dataset file
     with open(args.file, 'r') as f :
         k, t = f.readline().split(" ")
-        
-        dna_strings = []
-        [dna_strings.append(row.strip()) for i, row in enumerate(f.readlines())]
+        dna_strings = [row.strip() for i, row in enumerate(f.readlines())]
     
     motifs_score = float("inf")
     best_motifs = None
