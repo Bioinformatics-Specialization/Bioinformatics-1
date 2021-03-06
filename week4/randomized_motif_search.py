@@ -18,14 +18,9 @@ def find_motifs_from_profile(profile, dnas) :
     motifs = []
     k = len(profile["A"])
 
-    counter = 1
-    for dna in dnas :
-        # print("Looking into {}th DNA : {}".format(counter, dna))
-        
+    for dna in dnas :        
         probable_kmer = profileMostProbableKmer(dna, k, profile)
-
         motifs.append(probable_kmer)
-        counter = counter + 1
     
     return motifs
 
@@ -34,11 +29,6 @@ def find_consensus_string(kmers):
     consensus = []
 
     for i in range(len(kmers[0])):
-        '''
-        TODO : Need to change this dictionary to maybe list or some other ordered data store.
-        It is biased because if occurences of "C" and "T" are equal, it will take "C", even if
-        the kmers tell that "T" should be first.
-        '''
         nucleotides_dict = {"A": 0, "C": 0, "G": 0, "T": 0}
 
         for j in range(len(kmers)):
@@ -71,7 +61,6 @@ def randomizedMotifSearch(dnas, k, t) :
         
     motifs = best_motifs.copy()
 
-    counter = 0
     while True :
         profile = build_profile_matrix(motifs, pseudocounts=True)
         motifs = find_motifs_from_profile(profile, dnas)
@@ -144,8 +133,6 @@ def parseArgs() :
 def main() :
     args = parseArgs()
     dataset_path = "{}/{}_dataset.txt".format(DATASET_DIR, os.path.splitext(sys.argv[0])[0])
-    nucleotides = ["A", "C", "G", "T"]
-    pseudo_counts = False
 
     # Default to the dataset folder, if not provided
     if not args.file :
