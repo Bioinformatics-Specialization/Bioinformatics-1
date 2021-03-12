@@ -156,8 +156,8 @@ def main() :
             motifs_score = sc
             best_motifs = motifs
     
-    for best_motif in best_motifs :
-        print(best_motif)    
+    for best_motif in best_motifs : print(best_motif)    
     print("Score : {}".format(motifs_score))
+    
 if __name__ == "__main__":
     main()
